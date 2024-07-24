@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBooking, updateBooking } from '../store/bookingsSlice';
 import { RootState } from '../store';
@@ -6,6 +6,7 @@ import { Booking } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom';
 
 interface BookingFormProps {
   initialData?: Booking;
@@ -15,10 +16,27 @@ interface BookingFormProps {
 
 const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, property }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const bookings = useSelector((state: RootState) => state.bookings.bookings);
   const [startDate, setStartDate] = useState(initialData?.startDate ? new Date(initialData.startDate) : new Date());
   const [endDate, setEndDate] = useState(initialData?.endDate ? new Date(initialData.endDate) : new Date());
+  const [color, setColor] = useState(initialData?.color || getRandomColor());
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!initialData) {
+      setColor(getRandomColor());
+    }
+  }, [initialData]);
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +52,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
       property,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
+      color,
     };
 
     if (isOverlapping(booking)) {
@@ -48,6 +67,10 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
     }
 
     onSubmit();
+  };
+
+  const handleCancel = () => {
+    navigate(-1);
   };
 
   const isOverlapping = (newBooking: Booking): boolean => {
@@ -85,9 +108,24 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
           className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
         />
       </div>
-      <button type="submit" className="w-full px-4 py-2 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Submit
-      </button>
+      <div className="mb-4">
+        <label className="block text-gray-700 font-semibold">Color:</label>
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+          required
+          className="mt-1 block w-full h-10 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+        />
+      </div>
+      <div className="flex space-x-4">
+        <button type="submit" className="w-full px-4 py-2 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Submit
+        </button>
+        <button type="button" onClick={handleCancel} className="w-full px-4 py-2 bg-gray-500 text-white font-semibold rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };
