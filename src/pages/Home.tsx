@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropertyList from '../components/PropertyList';
+import { Button, Label } from 'flowbite-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector } from 'react-redux';
@@ -32,34 +33,29 @@ const Home: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8">Check Availability</h1>
+      <h1 className="text-3xl font-bold mb-8">Search for Properties</h1>
       <div className="flex space-x-4 mb-8">
         <div className="flex flex-col">
-          <label className="block text-gray-700 font-semibold">Check-in Date:</label>
+          <Label htmlFor="checkInDate">Check-in Date:</Label>
           <DatePicker
             selected={checkInDate}
             onChange={(date: Date) => setCheckInDate(date)}
             dateFormat="yyyy/MM/dd"
-            placeholderText="yyyy/MM/dd"
             className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
           />
         </div>
         <div className="flex flex-col">
-          <label className="block text-gray-700 font-semibold">Check-out Date:</label>
+          <Label htmlFor="checkOutDate">Check-out Date:</Label>
           <DatePicker
             selected={checkOutDate}
             onChange={(date: Date) => setCheckOutDate(date)}
             dateFormat="yyyy/MM/dd"
-            placeholderText="yyyy/MM/dd"
             className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
           />
         </div>
-        <button
-          onClick={handleSearch}
-          className="mt-6 px-4 py-2 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
+        <Button onClick={handleSearch} className="mt-6 bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500">
           Search
-        </button>
+        </Button>
       </div>
       <PropertyList filteredProperties={filteredProperties} />
     </div>

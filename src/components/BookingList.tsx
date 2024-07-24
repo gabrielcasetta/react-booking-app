@@ -4,6 +4,7 @@ import { deleteBooking } from '../store/bookingsSlice';
 import { Booking } from '../types';
 import BookingForm from './BookingForm';
 import Modal from './Modal';
+import { Button } from 'flowbite-react';
 
 interface BookingListProps {
   bookings: Booking[];
@@ -31,24 +32,24 @@ const BookingList: React.FC<BookingListProps> = ({ bookings }) => {
 
   return (
     <div className="max-w-2xl mx-auto p-4 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4 text-black">Bookings</h2>
+      <h2 className="text-2xl font-semibold mb-4">Bookings</h2>
       <ul className="space-y-4">
         {bookings.map(booking => (
           <li key={booking.id} className="p-4 border rounded shadow-sm bg-gray-50 relative">
             <div className="absolute top-0 left-0 w-2 h-full" style={{ backgroundColor: booking.color }}></div>
             <div className="ml-4">
-              <div className="mb-2 text-black">
+              <div className="mb-2">
                 <strong>Property:</strong> {booking.property}
               </div>
-              <div className="mb-2 text-black">
+              <div className="mb-2">
                 <strong>Start Date:</strong> {new Date(booking.startDate).toLocaleDateString()}
               </div>
-              <div className="mb-2 text-black">
+              <div className="mb-2">
                 <strong>End Date:</strong> {new Date(booking.endDate).toLocaleDateString()}
               </div>
               <div className="flex space-x-4">
-                <button onClick={() => handleEdit(booking)} className="text-indigo-500 hover:underline">Update</button>
-                <button onClick={() => handleDelete(booking.id)} className="text-red-500 hover:underline">Delete</button>
+                <Button onClick={() => handleEdit(booking)} className="text-indigo-500 hover:underline">Update</Button>
+                <Button onClick={() => handleDelete(booking.id)} className="text-red-500 hover:underline">Delete</Button>
               </div>
             </div>
           </li>

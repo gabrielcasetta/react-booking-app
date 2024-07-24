@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
 import { deleteProperty } from '../store/propertiesSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropertyForm from './PropertyForm';
 import Modal from './Modal';
+import { Button, Card } from 'flowbite-react';
 
-const PropertyList: React.FC = () => {
+interface PropertyListProps {
+  filteredProperties: string[];
+}
+
+const PropertyList: React.FC<PropertyListProps> = ({ filteredProperties }) => {
   const properties = useSelector((state: RootState) => state.properties.properties);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,27 +37,31 @@ const PropertyList: React.FC = () => {
     setAddingProperty(false);
   };
 
+  const displayedProperties = filteredProperties.length > 0
+    ? properties.filter(property => filteredProperties.includes(property.id))
+    : properties;
+
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Properties</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {properties.map(property => (
-          <div key={property.id} className="border rounded-lg shadow-sm p-4 bg-white">
+        {displayedProperties.map(property => (
+          <Card key={property.id} className="border rounded-lg shadow-sm p-4 bg-white">
             <img src={property.image} alt={property.name} className="w-full h-48 object-cover rounded-t-lg" />
             <div className="p-4">
-              <h3 className="text-lg font-semibold text-black">{property.name}</h3>
+              <h3 className="text-lg font-semibold">{property.name}</h3>
               <p className="text-gray-600">{property.description}</p>
               <div className="flex space-x-4">
-                <button onClick={() => handleEdit(property.id)} className="text-indigo-500 hover:underline">Manage Bookings</button>
-                <button onClick={() => handleDelete(property.id)} className="text-red-500 hover:underline">Delete</button>
+                <Button onClick={() => handleEdit(property.id)} className="text-indigo-500 hover:underline">Manage Bookings</Button>
+                <Button onClick={() => handleDelete(property.id)} className="text-red-500 hover:underline">Delete</Button>
               </div>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
-      <button onClick={handleAddProperty} className="mt-4 text-center text-white bg-indigo-500 px-4 py-2 rounded hover:bg-indigo-600">
+      <Button onClick={handleAddProperty} className="mt-4 text-center text-white bg-indigo-500 px-4 py-2 rounded hover:bg-indigo-600">
         Add Property
-      </button>
+      </Button>
 
       <Modal isOpen={addingProperty} onClose={handleCloseModal}>
         <PropertyForm onSubmit={handleFormSubmit} />

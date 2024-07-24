@@ -4,6 +4,7 @@ import { addBooking, updateBooking } from '../store/bookingsSlice';
 import { RootState } from '../store';
 import { Booking } from '../types';
 import { v4 as uuidv4 } from 'uuid';
+import { Button, Label, TextInput } from 'flowbite-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
@@ -89,7 +90,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded shadow-md">
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <div className="mb-4">
-        <label className="block text-gray-700 font-semibold">Start Date:</label>
+        <Label htmlFor="startDate">Start Date:</Label>
         <DatePicker
           selected={startDate}
           onChange={(date: Date) => setStartDate(date)}
@@ -99,7 +100,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-semibold">End Date:</label>
+        <Label htmlFor="endDate">End Date:</Label>
         <DatePicker
           selected={endDate}
           onChange={(date: Date) => setEndDate(date)}
@@ -109,8 +110,8 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-semibold">Color:</label>
-        <input
+        <Label htmlFor="color">Color:</Label>
+        <TextInput
           type="color"
           value={color}
           onChange={(e) => setColor(e.target.value)}
@@ -119,12 +120,14 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
         />
       </div>
       <div className="flex space-x-4">
-        <button type="submit" className="w-full px-4 py-2 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <Button type="submit" className="w-full bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500">
           Submit
-        </button>
-        <button type="button" onClick={handleCancel} className="w-full px-4 py-2 bg-gray-500 text-white font-semibold rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-          Cancel
-        </button>
+        </Button>
+        {!initialData && (
+          <Button type="button" onClick={handleCancel} className="w-full bg-gray-500 hover:bg-gray-600 focus:ring-gray-500">
+            Cancel
+          </Button>
+        )}
       </div>
     </form>
   );

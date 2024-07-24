@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { addProperty, updateProperty } from '../store/propertiesSlice';
 import { Property } from '../types';
 import { v4 as uuidv4 } from 'uuid';
+import { Button, Label, TextInput, Textarea, FileInput } from 'flowbite-react';
+import { useNavigate } from 'react-router-dom';
 
 interface PropertyFormProps {
   initialData?: Property;
@@ -11,6 +13,7 @@ interface PropertyFormProps {
 
 const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [name, setName] = useState(initialData?.name || '');
   const [description, setDescription] = useState(initialData?.description || '');
   const [image, setImage] = useState<File | null>(null);
@@ -40,6 +43,10 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) =>
     onSubmit();
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -49,8 +56,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) =>
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded shadow-md">
       <div className="mb-4">
-        <label className="block text-gray-700 font-semibold">Property Name:</label>
-        <input
+        <Label htmlFor="name">Property Name:</Label>
+        <TextInput
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -59,8 +66,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) =>
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-semibold">Description:</label>
-        <textarea
+        <Label htmlFor="description">Description:</Label>
+        <Textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
@@ -68,18 +75,22 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) =>
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700 font-semibold">Image:</label>
-        <input
-          type="file"
+        <Label htmlFor="image">Image:</Label>
+        <FileInput
           accept="image/*"
           onChange={handleImageChange}
           required
           className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
         />
       </div>
-      <button type="submit" className="w-full px-4 py-2 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Submit
-      </button>
+      <div className="flex space-x-4">
+        <Button type="submit" className="w-full bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500">
+          Submit
+        </Button>
+        <Button type="button" onClick={handleCancel} className="w-full bg-gray-500 hover:bg-gray-600 focus:ring-gray-500">
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 };

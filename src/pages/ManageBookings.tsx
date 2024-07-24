@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import BookingList from '../components/BookingList';
 import BookingForm from '../components/BookingForm';
+import { Breadcrumb } from 'flowbite-react';
 
 const ManageBookings: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +17,10 @@ const ManageBookings: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <Breadcrumb aria-label="breadcrumb">
+        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+        <Breadcrumb.Item href={`/bookings/${id}`}>{property.name}</Breadcrumb.Item>
+      </Breadcrumb>
       <h1 className="text-3xl font-bold mb-4">Manage Bookings for {property.name}</h1>
       <BookingList bookings={bookings} />
       <div className="mt-4">
