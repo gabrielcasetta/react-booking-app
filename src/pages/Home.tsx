@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
 import PropertyList from '../components/PropertyList';
 import { Button, Label } from 'flowbite-react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 
 const Home: React.FC = () => {
-  const [checkInDate, setCheckInDate] = useState<Date | null>(null);
-  const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+  const [dateRange, setDateRange] = useState<{ start: string; end: string }>({ start: '', end: '' });
   const [filteredProperties, setFilteredProperties] = useState<string[]>([]);
   const properties = useSelector((state: RootState) => state.properties.properties);
   const bookings = useSelector((state: RootState) => state.bookings.bookings);
 
   const handleSearch = () => {
-    if (!checkInDate || !checkOutDate) {
-      alert('Please select both check-in and check-out dates.');
+    if (!dateRange.start || !dateRange.end) {
+      alert('Please select a date range.');
       return;
     }
+
+    const checkInDate = new Date(dateRange.start);
+    const checkOutDate = new Date(dateRange.end);
 
     const availableProperties = properties.filter(property => {
       const propertyBookings = bookings.filter(booking => booking.property === property.name);
       return propertyBookings.every(booking => {
         const existingStart = new Date(booking.startDate);
         const existingEnd = new Date(booking.endDate);
-        return (checkOutDate <= existingStart || checkInDate >= existingEnd);
+        return checkOutDate <= existingStart || checkInDate >= existingEnd;
       });
     });
 
@@ -32,32 +35,60 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8">Search for Properties</h1>
-      <div className="flex space-x-4 mb-8">
-        <div className="flex flex-col">
-          <Label htmlFor="checkInDate">Check-in Date:</Label>
-          <DatePicker
-            selected={checkInDate}
-            onChange={(date: Date) => setCheckInDate(date)}
-            dateFormat="yyyy/MM/dd"
-            className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-          />
+    <div>
+      <section className="relative h-[80vh] overflow-hidden">
+        <video className="absolute top-0 left-0 w-full h-full object-cover" autoPlay loop muted>
+          <source src="/src/assets/homebg.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="relative z-10 flex items-center justify-center h-full bg-black bg-opacity-50">
+          <div className="text-center text-white">
+            <h1 className="text-5xl font-bold mb-8">Welcome to Our Property Booking</h1>
+            <p className="text-lg mb-8">Find the perfect property for your stay.</p>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <Label htmlFor="checkOutDate">Check-out Date:</Label>
-          <DatePicker
-            selected={checkOutDate}
-            onChange={(date: Date) => setCheckOutDate(date)}
-            dateFormat="yyyy/MM/dd"
-            className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
-          />
+      </section>
+      <div className="container mx-auto p-4">
+        <div className="relative flex justify-center mt-[-100px] z-20">
+          <div className="bg-white p-6 rounded-lg shadow-lg flex justify-center items-end gap-4">
+            <div className="flex flex-col">
+              <div id="date-range-picker" className="flex flex-col md:flex-row gap-4">
+                <div className="relative">
+                  <Label htmlFor="datepicker-range-start">Check-in Date:</Label>
+                  <input
+                    id="datepicker-range-start"
+                    name="start"
+                    type="date"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={dateRange.start}
+                    onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
+                  />
+                </div>
+
+                <div className="relative">
+                  <Label htmlFor="datepicker-range-end">Check-out Date:</Label>
+                  <input
+                    id="datepicker-range-end"
+                    name="end"
+                    type="date"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    value={dateRange.end}
+                    onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
+                  />
+                </div>
+              </div>
+            </div>
+            <Button
+              onClick={handleSearch}
+              className=""
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} className="me-2"/>
+              Check Availability
+            </Button>
+          </div>
         </div>
-        <Button onClick={handleSearch} className="mt-6 bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500">
-          Search
-        </Button>
+        <PropertyList filteredProperties={filteredProperties} />
       </div>
-      <PropertyList filteredProperties={filteredProperties} />
     </div>
   );
 };

@@ -16,6 +16,11 @@ const initialState: PropertiesState = {
     { id: '1', name: 'Property One', image: '/src/assets/property1.jpg', description: 'Description for Property One' },
     { id: '2', name: 'Property Two', image: '/src/assets/property2.jpg', description: 'Description for Property Two' },
     { id: '3', name: 'Property Three', image: '/src/assets/property3.jpg', description: 'Description for Property Three' },
+    { id: '4', name: 'Property Four', image: '/src/assets/property1.jpg', description: 'Description for Property Four' },
+    { id: '5', name: 'Property Five', image: '/src/assets/property2.jpg', description: 'Description for Property Five' },
+    { id: '6', name: 'Property Six', image: '/src/assets/property3.jpg', description: 'Description for Property Six' },
+    { id: '7', name: 'Property Seven', image: '/src/assets/property2.jpg', description: 'Description for Property Seven' },
+    { id: '8', name: 'Property Eight', image: '/src/assets/property3.jpg', description: 'Description for Property Eight' },
   ],
 };
 
