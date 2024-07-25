@@ -7,6 +7,7 @@ import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import './Home.css'
 
 const Home: React.FC = () => {
   const [dateRange, setDateRange] = useState([
@@ -44,7 +45,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <section className="relative h-[80vh] overflow-hidden">
+      <section className="relative h-[100vh] overflow-hidden">
         <video className="absolute top-0 left-0 w-full h-full object-cover" autoPlay loop muted>
           <source src="/src/assets/homebg.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -53,6 +54,12 @@ const Home: React.FC = () => {
           <div className="text-center text-white">
             <h1 className="text-5xl font-bold mb-8">Welcome to Our Property Booking</h1>
             <p className="text-lg mb-8">Find the perfect property for your stay.</p>
+            <div className="container_mouse">
+              <span className="mouse-btn">
+                  <span className="mouse-scroll"></span>
+              </span>
+              <span className='text-sm'>scroll down</span>
+          </div>
           </div>
         </div>
       </section>
@@ -63,7 +70,7 @@ const Home: React.FC = () => {
               <div className="flex flex-col">
                 <div className="flex flex-row w-full">
                   <Label htmlFor="datepicker-range-start" className="mb-2 w-1/2">Check-in Date:</Label>
-                  <Label htmlFor="datepicker-range-end" className="mb-2 text-right w-1/2 text-left">Checkout Date:</Label>
+                  <Label htmlFor="datepicker-range-end" className="mb-2 text-right w-1/2 text-left">Check-out Date:</Label>
                 </div>
                 <DateRange
                   editableDateInputs={true}
