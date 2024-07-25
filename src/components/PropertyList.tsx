@@ -18,17 +18,23 @@ const PropertyList: React.FC<PropertyListProps> = ({ filteredProperties }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [addingProperty, setAddingProperty] = useState<boolean>(false);
+  const [editingProperty, setEditingProperty] = useState<Property | null>(null);
 
   const handleDelete = (id: string) => {
     dispatch(deleteProperty(id));
   };
 
-  const handleEdit = (id: string) => {
+  const handleManageBookings = (id: string) => {
     navigate(`/bookings/${id}`);
+  };
+
+  const handleEdit = (property: Property) => {
+    setEditingProperty(property);
   };
 
   const handleFormSubmit = () => {
     setAddingProperty(false);
+    setEditingProperty(null);
   };
 
   const handleAddProperty = () => {
@@ -37,6 +43,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ filteredProperties }) => {
 
   const handleCloseModal = () => {
     setAddingProperty(false);
+    setEditingProperty(null);
   };
 
   const displayedProperties = filteredProperties.length > 0
@@ -45,7 +52,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ filteredProperties }) => {
 
   return (
     <div className="container mx-auto mt-8">
-      <style jsx>{`
+      <style>{`
         img {
           height: 210px;
           object-fit: cover;
@@ -66,27 +73,31 @@ const PropertyList: React.FC<PropertyListProps> = ({ filteredProperties }) => {
             <div className="p-4">
               <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{property.name}</h5>
               <p className="font-normal text-gray-700 dark:text-gray-400">{property.description}</p>
-              <div className="flex space-x-4 mt-4">
-                <Button onClick={() => handleEdit(property.id)} className="">
+              <div className="flex justify-between space-x-4 mt-4">
+                <Button onClick={() => handleManageBookings(property.id)} className="">
                   <FontAwesomeIcon icon={faEdit} className="me-2" />
                   Manage Bookings
                 </Button>
-                <Button onClick={() => handleDelete(property.id)} className="">
-                  <FontAwesomeIcon icon={faTrash} className="me-2" />
-                  Delete
-                </Button>
+                <div className='flex flex-row gap-4 items-center'>
+                  <a onClick={() => handleEdit(property)} className="">
+                    <FontAwesomeIcon icon={faEdit} className="me-2 cursor-pointer" />
+                  </a>
+                  <a onClick={() => handleDelete(property.id)} className="">
+                    <FontAwesomeIcon icon={faTrash} className="me-2 cursor-pointer" />
+                  </a>
+                </div>
               </div>
             </div>
           </Card>
         ))}
         <Button onClick={handleAddProperty} className="bg-white text-black items-center">
-        <FontAwesomeIcon icon={faPlus} className="me-2" />
+          <FontAwesomeIcon icon={faPlus} className="me-2" />
           Add Property
         </Button>
       </div>
 
-      <Modal isOpen={addingProperty} onClose={handleCloseModal}>
-        <PropertyForm onSubmit={handleFormSubmit} />
+      <Modal isOpen={addingProperty || editingProperty !== null} onClose={handleCloseModal}>
+        <PropertyForm initialData={editingProperty} onSubmit={handleFormSubmit} />
       </Modal>
     </div>
   );

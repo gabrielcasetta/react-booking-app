@@ -1,5 +1,7 @@
 import React from 'react'
 import AppRouter from './Router'
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 const App = () => {
   return (
