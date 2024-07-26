@@ -72,7 +72,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings, propertyName }) => 
       `}</style>
 
       <div className="bg-white rounded shadow-md p-4 mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Calendar View</h2>
+        <h2 className="text-2xl font-semibold mb-4"><span className='font-light'>Calendar View for </span> {propertyName}</h2>
         <Calendar
           tileClassName={tileClassName}
           className="w-full rounded-md bg-gray-50 border-none"
@@ -80,7 +80,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings, propertyName }) => 
       </div>
 
       <div className="bg-white rounded shadow-md p-4">
-        <h2 className="text-2xl font-semibold my-4">Bookings for {propertyName}</h2>
+        <h2 className="text-2xl font-semibold mb-4"><span className='font-light'>Bookings for </span> {propertyName}</h2>
         <Table hoverable>
           <Table.Head>
             <Table.HeadCell>Name</Table.HeadCell>

@@ -75,7 +75,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
 
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Add Booking</h2>
+      <h2 className="text-2xl font-semibold mb-4 font-light">Add Booking</h2>
       {error && 
         <Alert color="failure">
           <span className="font-medium">{error}</span>
@@ -86,6 +86,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
         <TextInput
           type="text"
           value={name}
+          placeholder='John Doe'
           onChange={(e) => setName(e.target.value)}
           required
           className=""
