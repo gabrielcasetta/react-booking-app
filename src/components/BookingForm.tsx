@@ -5,7 +5,6 @@ import { RootState } from '../store';
 import { Booking } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, Button, Datepicker, Label, TextInput } from 'flowbite-react';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 
 interface BookingFormProps {
@@ -21,23 +20,11 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
   const [name, setName] = useState(initialData?.name || '');
   const [startDate, setStartDate] = useState(initialData?.startDate ? new Date(initialData.startDate) : new Date());
   const [endDate, setEndDate] = useState(initialData?.endDate ? new Date(initialData.endDate) : new Date());
-  const [color, setColor] = useState(initialData?.color || getRandomColor());
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!initialData) {
-      setColor(getRandomColor());
-    }
-  }, [initialData]);
 
-  function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
+  }, [initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,8 +40,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
       name,
       property,
       startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      color,
+      endDate: endDate.toISOString()
     };
 
     if (isOverlapping(booking)) {
@@ -119,16 +105,6 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
         <Datepicker
           defaultDate={endDate}
           onSelectedDateChanged={(date: Date) => setEndDate(date)}
-          required
-          className=""
-        />
-      </div>
-      <div className="mb-4">
-        <Label htmlFor="color">Color:</Label>
-        <TextInput
-          type="color"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
           required
           className=""
         />

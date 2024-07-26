@@ -4,6 +4,5 @@ export interface Booking {
     property: string;
     startDate: string;
     endDate: string;
-    color: string;
   }
   

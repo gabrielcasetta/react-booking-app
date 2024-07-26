@@ -16,14 +16,11 @@ const ManageBookings: React.FC = () => {
 
   return (
     <div className="container mx-auto min-h-screen">
-      <div className="">
-        Calendar
-      </div>
       <div className="flex gap-4">
-        <div className="grow">
+        <div className="grow mt-8">
           <BookingList bookings={bookings} propertyName={property.name} />
         </div>
-        <div className="grow">
+        <div className="grow mt-8">
           <BookingForm property={property.name} onSubmit={() => {}} />
         </div>
       </div>
