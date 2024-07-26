@@ -4,13 +4,14 @@ import { deleteBooking } from '../store/bookingsSlice';
 import { Booking } from '../types';
 import BookingForm from './BookingForm';
 import Modal from './Modal';
-import { Button } from 'flowbite-react';
+import { Button, Table } from 'flowbite-react';
 
 interface BookingListProps {
   bookings: Booking[];
+  propertyName: string;
 }
 
-const BookingList: React.FC<BookingListProps> = ({ bookings }) => {
+const BookingList: React.FC<BookingListProps> = ({ bookings, propertyName }) => {
   const dispatch = useDispatch();
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
 
@@ -31,36 +32,49 @@ const BookingList: React.FC<BookingListProps> = ({ bookings }) => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4">Bookings</h2>
-      <ul className="space-y-4">
-        {bookings.map(booking => (
-          <li key={booking.id} className="p-4 border rounded shadow-sm bg-gray-50 relative">
-            <div className="absolute top-0 left-0 w-2 h-full" style={{ backgroundColor: booking.color }}></div>
-            <div className="ml-4">
-              <div className="mb-2">
-                <strong>Property:</strong> {booking.property}
-              </div>
-              <div className="mb-2">
-                <strong>Start Date:</strong> {new Date(booking.startDate).toLocaleDateString()}
-              </div>
-              <div className="mb-2">
-                <strong>End Date:</strong> {new Date(booking.endDate).toLocaleDateString()}
-              </div>
-              <div className="flex space-x-4">
-                <Button onClick={() => handleEdit(booking)} className="text-indigo-500 hover:underline">Update</Button>
-                <Button onClick={() => handleDelete(booking.id)} className="text-red-500 hover:underline">Delete</Button>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className="max-w-4xl mx-auto p-4 bg-white rounded shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Bookings for {propertyName}</h2>
+      <Table hoverable>
+        <Table.Head>
+          <Table.HeadCell>Name</Table.HeadCell>
+          <Table.HeadCell>Property</Table.HeadCell>
+          <Table.HeadCell>Start Date</Table.HeadCell>
+          <Table.HeadCell>End Date</Table.HeadCell>
+          <Table.HeadCell>Actions</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y">
+          {bookings.map(booking => (
+            <Table.Row key={booking.id} className="bg-white">
+              <Table.Cell>{booking.name}</Table.Cell>
+              <Table.Cell>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 mr-2 rounded-full" style={{ backgroundColor: booking.color }}></div>
+                  {booking.property}
+                </div>
+              </Table.Cell>
+              <Table.Cell>{new Date(booking.startDate).toLocaleDateString()}</Table.Cell>
+              <Table.Cell>{new Date(booking.endDate).toLocaleDateString()}</Table.Cell>
+              <Table.Cell>
+                <div className="flex space-x-2">
+                  <Button onClick={() => handleEdit(booking)} size="xs">
+                    Edit
+                  </Button>
+                  <Button onClick={() => handleDelete(booking.id)} size="xs" color="failure">
+                    Delete
+                  </Button>
+                </div>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
 
       {editingBooking && (
         <Modal isOpen={!!editingBooking} onClose={handleCloseModal}>
           <BookingForm initialData={editingBooking} onSubmit={handleFormSubmit} property={editingBooking.property} />
         </Modal>
       )}
+
     </div>
   );
 };

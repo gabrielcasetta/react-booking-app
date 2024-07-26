@@ -4,8 +4,7 @@ import { addBooking, updateBooking } from '../store/bookingsSlice';
 import { RootState } from '../store';
 import { Booking } from '../types';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, Label, TextInput } from 'flowbite-react';
-import DatePicker from 'react-datepicker';
+import { Alert, Button, Datepicker, Label, TextInput } from 'flowbite-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,6 +18,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const bookings = useSelector((state: RootState) => state.bookings.bookings);
+  const [name, setName] = useState(initialData?.name || '');
   const [startDate, setStartDate] = useState(initialData?.startDate ? new Date(initialData.startDate) : new Date());
   const [endDate, setEndDate] = useState(initialData?.endDate ? new Date(initialData.endDate) : new Date());
   const [color, setColor] = useState(initialData?.color || getRandomColor());
@@ -50,6 +50,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
 
     const booking: Booking = {
       id: initialData?.id || uuidv4(),
+      name,
       property,
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
@@ -87,26 +88,39 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded shadow-md">
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4 bg-white rounded shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Add Booking</h2>
+      {error && 
+        <Alert color="failure">
+          <span className="font-medium">{error}</span>
+        </Alert>
+      }
+      <div className="mb-4">
+        <Label htmlFor="name">Name:</Label>
+        <TextInput
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          className=""
+        />
+      </div>
       <div className="mb-4">
         <Label htmlFor="startDate">Start Date:</Label>
-        <DatePicker
-          selected={startDate}
-          onChange={(date: Date) => setStartDate(date)}
-          dateFormat="yyyy/MM/dd"
+        <Datepicker 
+          defaultDate={startDate}
+          onSelectedDateChanged={(date: Date) => setStartDate(date)}
           required
-          className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+          className=""
         />
       </div>
       <div className="mb-4">
         <Label htmlFor="endDate">End Date:</Label>
-        <DatePicker
-          selected={endDate}
-          onChange={(date: Date) => setEndDate(date)}
-          dateFormat="yyyy/MM/dd"
+        <Datepicker
+          defaultDate={endDate}
+          onSelectedDateChanged={(date: Date) => setEndDate(date)}
           required
-          className="mt-1 block w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+          className=""
         />
       </div>
       <div className="mb-4">
@@ -116,15 +130,15 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
           value={color}
           onChange={(e) => setColor(e.target.value)}
           required
-          className="mt-1 block w-full h-10 px-3 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+          className=""
         />
       </div>
       <div className="flex space-x-4">
-        <Button type="submit" className="w-full bg-indigo-500 hover:bg-indigo-600 focus:ring-indigo-500">
+        <Button type="submit" className="w-full">
           Submit
         </Button>
         {!initialData && (
-          <Button type="button" onClick={handleCancel} className="w-full bg-gray-500 hover:bg-gray-600 focus:ring-gray-500">
+          <Button type="button" onClick={handleCancel} className="w-">
             Cancel
           </Button>
         )}
