@@ -41,7 +41,7 @@ const ManageBookings: React.FC = () => {
           <img src={property.image} alt="..." />
         </Carousel>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-col-reverse lg:flex-row">
         <div className="grow mt-8">
           <BookingList bookings={bookings} propertyName={property.name} />
         </div>
