@@ -7,6 +7,8 @@ import Modal from './Modal';
 import { Button, Table } from 'flowbite-react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface BookingListProps {
   bookings: Booking[];
@@ -46,7 +48,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings, propertyName }) => 
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="mx-auto">
       <style>{`
         .booking-highlight {
           background-color: #000;
@@ -110,10 +112,10 @@ const BookingList: React.FC<BookingListProps> = ({ bookings, propertyName }) => 
                 <Table.Cell>
                   <div className="flex space-x-2">
                     <Button onClick={() => handleEdit(booking)} size="xs">
-                      Edit
+                      <FontAwesomeIcon icon={faEdit} className="me-2 cursor-pointer" /> Edit
                     </Button>
                     <Button onClick={() => handleDelete(booking.id)} size="xs" color="failure">
-                      Delete
+                      <FontAwesomeIcon icon={faTrash} className="me-2 cursor-pointer" /> Delete
                     </Button>
                   </div>
                 </Table.Cell>
