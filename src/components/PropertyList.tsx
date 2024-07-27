@@ -96,7 +96,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ filteredProperties }) => {
         </Button>
       </div>
 
-      <Modal isOpen={addingProperty || editingProperty !== null} onClose={handleCloseModal}>
+      <Modal isOpen={addingProperty || editingProperty !== null} onClose={handleCloseModal} header={addingProperty ? "Add Property" : "Edit Property"}>
         <PropertyForm initialData={editingProperty} onSubmit={handleFormSubmit} />
       </Modal>
     </div>

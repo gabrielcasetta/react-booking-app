@@ -126,7 +126,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings, propertyName }) => 
         
 
         {editingBooking && (
-          <Modal isOpen={!!editingBooking} onClose={handleCloseModal}>
+          <Modal isOpen={!!editingBooking} onClose={handleCloseModal} header="Edit Booking">
             <BookingForm initialData={editingBooking} onSubmit={handleFormSubmit} property={editingBooking.property} />
           </Modal>
         )}

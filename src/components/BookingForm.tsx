@@ -30,6 +30,14 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
     e.preventDefault();
     setError(null);
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset the time part to compare only the date
+
+    if (startDate < today) {
+      setError('Start date cannot be before today.');
+      return;
+    }
+
     if (startDate >= endDate) {
       setError('End date must be after start date.');
       return;
@@ -74,8 +82,10 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-4 bg-white rounded shadow-md">
-      <h2 className="text-2xl font-semibold mb-4 font-light">Add Booking</h2>
+    <form onSubmit={handleSubmit} className={!initialData ? "max-w-4xl mx-auto p-4 bg-white rounded shadow-md":""}>
+      {!initialData && (
+        <h2 className="text-2xl font-semibold mb-4 font-light">Add Booking</h2>
+      )}
       {error && 
         <Alert color="failure">
           <span className="font-medium">{error}</span>
