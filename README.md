@@ -1,30 +1,49 @@
-# React + TypeScript + Vite
+# React Booking App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+The React Booking App is a web application designed to manage property bookings. It allows users to create, read, update, and delete bookings. The app ensures that bookings do not overlap for the same property and includes features for responsive design, good UI/UX, and global state management.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Screenshots
+### Home
+![localhost_5173_](https://github.com/user-attachments/assets/61ff01a6-0def-442f-a63a-ee99544f21f7)
 
-## Expanding the ESLint configuration
+### Manage Bookings
+![localhost_5173_ (1)](https://github.com/user-attachments/assets/e2aca3ea-d6c7-43d8-af1c-26fbe88aa72a)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- **Create Booking:** Add new bookings for properties.
+- **Read Booking:** View existing bookings.
+- **Update Booking:** Edit details of existing bookings.
+- **Delete Booking:** Remove bookings.
+- **Property Management:** Add, update, and delete properties.
+- **Date Validation:** Ensure bookings do not overlap and that start dates are not before today.
+- **Responsive Design:** Fully responsive for desktop and mobile.
+- **Good UI/UX:** Enhanced UI design for better functionality and readability.
+- **Testing:** Cypress end-to-end tests for key functionalities.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Tech Stack
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **React**
+- **TypeScript**
+- **Redux**
+- **Tailwind CSS**
+- **Flowbite**
+- **Cypress**
+- **Vite**
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/gabrielcasetta/react-booking-app.git
+   cd react-booking-app
