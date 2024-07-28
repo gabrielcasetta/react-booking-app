@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBooking, updateBooking } from '../store/bookingsSlice';
-import { RootState } from '../store';
-import { Booking } from '../types';
+import { addBooking, updateBooking } from '../../store/bookingsSlice';
+import { RootState } from '../../store';
+import { Booking } from '../../types';
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, Button, Datepicker, Label, TextInput } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';

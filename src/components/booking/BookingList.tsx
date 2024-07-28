@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteBooking } from '../store/bookingsSlice';
-import { Booking } from '../types';
+import { deleteBooking } from '../../store/bookingsSlice';
+import { Booking } from '../../types';
 import BookingForm from './BookingForm';
-import Modal from './Modal';
+import Modal from '../Modal';
 import { Button, Table } from 'flowbite-react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';

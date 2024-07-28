@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropertyList from '../components/PropertyList';
+import PropertyList from '../components/property/PropertyList';
 import { Button, Label } from 'flowbite-react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';

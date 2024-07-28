@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { addProperty, updateProperty } from '../store/propertiesSlice';
-import { Property } from '../types';
+import { addProperty, updateProperty } from '../../store/propertiesSlice';
+import { Property } from '../../types';
 import { v4 as uuidv4 } from 'uuid';
 import { Button, Label, TextInput, Textarea, FileInput } from 'flowbite-react';
 

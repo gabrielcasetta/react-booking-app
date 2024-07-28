@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../store';
-import { deleteProperty } from '../store/propertiesSlice';
+import { RootState } from '../../store';
+import { deleteProperty } from '../../store/propertiesSlice';
 import { useNavigate } from 'react-router-dom';
 import PropertyForm from './PropertyForm';
-import Modal from './Modal';
+import Modal from '../Modal';
 import { Button, Card } from 'flowbite-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
