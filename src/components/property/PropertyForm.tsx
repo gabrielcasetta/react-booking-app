@@ -30,7 +30,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) =>
       return;
     }
 
-    const imagePath = image ? URL.createObjectURL(image) : initialData.image;
+    const imagePath = image ? URL.createObjectURL(image) : initialData?.image;
 
     const property: Property = {
       id: initialData?.id || uuidv4(),
@@ -64,6 +64,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) =>
           onChange={(e) => setName(e.target.value)}
           required
           className=""
+          name='propertyName'
         />
       </div>
       <div className="mb-4">
@@ -73,6 +74,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ initialData, onSubmit }) =>
           onChange={(e) => setDescription(e.target.value)}
           required
           className=""
+          name='propertyDescription'
         />
       </div>
       <div className="mb-4">

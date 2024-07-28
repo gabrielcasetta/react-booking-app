@@ -6,3 +6,9 @@ export interface Booking {
     endDate: string;
   }
   
+export interface Property {
+  id: string;
+  name: string;
+  description: string;
+  image: any;
+}

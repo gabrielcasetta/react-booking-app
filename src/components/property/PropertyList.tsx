@@ -79,10 +79,10 @@ const PropertyList: React.FC<PropertyListProps> = ({ filteredProperties }) => {
                   Manage Bookings
                 </Button>
                 <div className='flex flex-row gap-4 items-center'>
-                  <a onClick={() => handleEdit(property)} className="">
+                  <a onClick={() => handleEdit(property)} className="propertyEdit">
                     <FontAwesomeIcon icon={faEdit} className="me-2 cursor-pointer" />
                   </a>
-                  <a onClick={() => handleDelete(property.id)} className="">
+                  <a onClick={() => handleDelete(property.id)} className="propertyDelete">
                     <FontAwesomeIcon icon={faTrash} className="me-2 cursor-pointer" />
                   </a>
                 </div>
