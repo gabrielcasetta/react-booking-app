@@ -19,7 +19,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
   const bookings = useSelector((state: RootState) => state.bookings.bookings);
   const [name, setName] = useState(initialData?.name || '');
   const [startDate, setStartDate] = useState(initialData?.startDate ? new Date(initialData.startDate) : new Date());
-  const [endDate, setEndDate] = useState(initialData?.endDate ? new Date(initialData.endDate) : new Date());
+  const [endDate, setEndDate] = useState(initialData?.endDate ? new Date(initialData.endDate) : new Date(new Date().getTime() + 24 * 60 * 60 * 1000));
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -103,21 +103,23 @@ const BookingForm: React.FC<BookingFormProps> = ({ initialData, onSubmit, proper
         />
       </div>
       <div className="mb-4">
-        <Label htmlFor="startDate">Start Date:</Label>
+        <Label htmlFor="startDate">Check-in Date:</Label>
         <Datepicker 
           defaultDate={startDate}
           onSelectedDateChanged={(date: Date) => setStartDate(date)}
           required
           className=""
+          name='checkin'
         />
       </div>
       <div className="mb-4">
-        <Label htmlFor="endDate">End Date:</Label>
+        <Label htmlFor="endDate">Check-out Date:</Label>
         <Datepicker
           defaultDate={endDate}
           onSelectedDateChanged={(date: Date) => setEndDate(date)}
           required
           className=""
+          name='checkout'
         />
       </div>
       <div className="flex space-x-4">
